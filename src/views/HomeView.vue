@@ -2,8 +2,10 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
-    <button @click="sendNotification">Send Notification</button>
+    <button @click="sendNotification">Store Data</button>
     <p>Version 1.1</p>
+    <button @click="sendPushNotification">Send Notification</button>
+
   </div>
 </template>
 
@@ -48,6 +50,28 @@ export default {
         console.error('Error sending push notification:', error);
       }
     },
+    async sendPushNotification() {
+
+      try {
+        // Replace with the actual subscription object obtained earlier
+        const subscription = {
+          endpoint: localStorage.getItem('endpoint'),
+          keys: {
+            auth: localStorage.getItem('authKey'),
+            p256dh: localStorage.getItem('p256dhKey'),
+          },
+        };
+
+        const payload = JSON.stringify({
+          title: 'Notification Title',
+          text: 'Notification Text',
+        });
+
+        await webpush.sendNotification(subscription, payload);
+      } catch (error) {
+        console.error('Error sending push notification:', error);
+      }
+    }
   }
 }
 </script>
