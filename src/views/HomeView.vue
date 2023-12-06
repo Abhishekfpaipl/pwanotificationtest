@@ -3,6 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <button @click="sendNotification">Send Notification</button>
+    <p>Version 1.1</p>
   </div>
 </template>
 
@@ -28,7 +29,11 @@ export default {
         const subscription = await serviceWorkerRegistration.pushManager.getSubscription() /* Retrieve subscription object */;
         if (subscription) {
           // User is already subscribed
-          console.log('hello',subscription)
+          console.log('hello', JSON.stringify(subscription))
+          const { keys, endpoint } = subscription.toJSON();
+          localStorage.setItem('p256dhKey', keys.p256dh);
+          localStorage.setItem('authKey', keys.auth);
+          localStorage.setItem('endpoint', endpoint)
           return subscription;
         }
 
