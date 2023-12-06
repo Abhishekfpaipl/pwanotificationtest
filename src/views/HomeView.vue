@@ -28,6 +28,7 @@ export default {
         const subscription = await serviceWorkerRegistration.pushManager.getSubscription() /* Retrieve subscription object */;
         if (subscription) {
           // User is already subscribed
+          console.log('hello',subscription)
           return subscription;
         }
 
